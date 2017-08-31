@@ -83,11 +83,7 @@ class Mandrillpress {
 		}
 		$this->plugin_name = 'mandrillpress';
 
-		if ( is_multisite() ) {
-			$this->settings = get_site_option( 'mandrillpress', array() );
-		} else {
-			$this->settings = get_option( 'mandrillpress', array() );
-		}
+		$this->settings = get_site_option( 'mandrillpress', array() );
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -172,14 +168,10 @@ class Mandrillpress {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		if ( is_multisite() ) {
-
-			$this->loader->add_action( 'network_admin_menu', $plugin_admin, 'options_page' );
-		} else {
-
+		if ( get_current_blog_id() == 1 ) {
 			$this->loader->add_action( 'admin_menu', $plugin_admin, 'options_page' );
+			$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 		}
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 
 		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
 

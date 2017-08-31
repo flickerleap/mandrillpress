@@ -118,26 +118,13 @@ class Mandrillpress_Admin {
 	 */
 	public function options_page() {
 
-		if ( is_multisite() ) {
-			add_submenu_page(
-				'settings.php',
-				'Mandrill',
-				'Mandrill',
-				'manage_options',
-				'mandrillpress',
-				array( $this, 'options_page_html' )
-			);
-
-		} else {
-
-			add_options_page(
-				'Mandrill',
-				'Mandrill',
-				'manage_options',
-				'mandrillpress',
-				array( $this, 'options_page_html' )
-			);
-		}
+		add_options_page(
+			'Mandrill',
+			'Mandrill',
+			'manage_options',
+			'mandrillpress',
+			array( $this, 'options_page_html' )
+		);
 
 	}
 
