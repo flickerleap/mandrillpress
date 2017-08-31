@@ -16,7 +16,11 @@ settings_errors( 'wporg_messages' );
 ?>
 <div class="wrap">
 	<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+	<?php if ( is_multisite() ) { ?>
+	<form action="settings.php" method="post">
+	<?php } else { ?>
 	<form action="options.php" method="post">
+	<?php } ?>
 		<?php
 		// output security fields for the registered setting "wporg"
 		settings_fields( 'mandrillpress' );
