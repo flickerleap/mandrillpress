@@ -175,14 +175,14 @@ class Mandrillpress {
 
 		if ( is_multisite() ) {
 			;
-			$this->loader->add_action( 'update_option_mandrillpress', $this, 'update_network_option', 10, 3 );
+			$this->loader->add_action( 'updated_option', $this, 'update_network_option', 10, 3 );
 		}
 
 		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
 
 	}
 
-	public function update_network_option( $old_value, $value, $option ) {
+	public function update_network_option( $option, $old_value, $value ) {
 		exit;
 		update_network_option( 1, $option, $value );
 	}
