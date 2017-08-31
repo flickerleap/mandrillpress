@@ -183,10 +183,6 @@ class Mandrillpress {
 	}
 
 	public function update_network_option( $option, $old_value, $value ) {
-		var_dump($option);
-		var_dump($old_value);
-		var_dump($value);
-		exit;
 		if ( 'mandrillpress' == $option ) {
 			update_network_option( 1, $option, $value );
 		}
