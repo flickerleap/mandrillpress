@@ -83,7 +83,11 @@ class Mandrillpress {
 		}
 		$this->plugin_name = 'mandrillpress';
 
-		$this->settings = get_option( 'mandrillpress', array() );
+		if ( is_multisite() ) {
+			$this->settings = get_site_option( 'mandrillpress', array() );
+		} else {
+			$this->settings = get_option( 'mandrillpress', array() );
+		}
 
 		$this->load_dependencies();
 		$this->set_locale();
