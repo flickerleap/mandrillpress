@@ -173,8 +173,17 @@ class Mandrillpress {
 			$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 		}
 
+		if ( is_multisite() ) {
+			;
+			$this->loader->add_action( 'update_option_mandrill_press', $this, 'update_network_option' );
+		}
+
 		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
 
+	}
+
+	public function update_network_option( $old_value, $value, $option ) {
+		update_network_option( 1, $option, $value );
 	}
 
 	/**
