@@ -14,8 +14,8 @@
  *
  * @wordpress-plugin
  * Plugin Name:       MandrillPress
- * Plugin URI:        https://flickerleap.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Plugin URI:        https://github.com/flickerleap/mandrillpress
+ * Description:       A WordPress plugin that sends all WordPress emails via Mandrill.
  * Version:           1.0.0
  * Author:            Flicker Leap
  * Author URI:        https://flickerleap.com
@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( PLUGIN_VERSION, '1.0.0' );
+define( 'PLUGIN_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.

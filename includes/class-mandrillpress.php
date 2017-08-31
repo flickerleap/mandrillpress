@@ -58,6 +58,15 @@ class Mandrillpress {
 	protected $version;
 
 	/**
+	 * The settings for the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $settings    Holds the options.
+	 */
+	private $settings;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -73,6 +82,8 @@ class Mandrillpress {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'mandrillpress';
+
+		$this->settings = get_option( 'mandrillpress', array() );
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -152,10 +163,21 @@ class Mandrillpress {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Mandrillpress_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Mandrillpress_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_settings() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		if ( is_multisite() ) {
+
+			$this->loader->add_action( 'network_admin_menu', $plugin_admin, 'options_page' );
+		} else {
+
+			$this->loader->add_action( 'admin_menu', $plugin_admin, 'options_page' );
+		}
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+
+		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
 
 	}
 
@@ -172,6 +194,41 @@ class Mandrillpress {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
+
+	}
+
+	public function use_mandrill( $phpmailer ) {
+
+		if ( empty( $this->settings )
+			|| empty( $this->settings['from_email'] )
+			|| empty( $this->settings['from_name'] )
+			|| empty( $this->settings['username'] )
+			|| empty( $this->settings['api_key'] )
+		) {
+			return;
+		}
+
+		$phpmailer->isSMTP();
+		$phpmailer->set( 'SMTPAuth', true );
+		$phpmailer->set( 'SMTPSecure', 'tls' );
+
+		$phpmailer->set( 'Host', 'smtp.mandrillapp.com' );
+		$phpmailer->set( 'Port', '587' );
+
+		$phpmailer->setFrom( $this->settings['from_email'], $this->settings['from_name'] );
+
+		$phpmailer->set( 'Username', $this->settings['username'] );
+		$phpmailer->set( 'Password', $this->settings['api_key'] );
+
+		if ( isset( $this->settings['subaccount'] ) && ! empty( $this->settings['subaccount'] ) ) {
+			$phpmailer->AddCustomHeader( sprintf( '%1$s: %2$s', 'X-MC-Subaccount', $this->settings['subaccount'] ) );
+		}
+
+		if ( isset( $this->settings['return_path'] ) && ! empty( $this->settings['return_path'] ) ) {
+			$phpmailer->AddCustomHeader( sprintf( '%1$s: %2$s', 'X-MC-ReturnPathDomain', $this->settings['a'] ) );
+		}
 
 	}
 
@@ -213,6 +270,16 @@ class Mandrillpress {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the settings of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The settings of the plugin.
+	 */
+	public function get_settings() {
+		return $this->settings;
 	}
 
 }
