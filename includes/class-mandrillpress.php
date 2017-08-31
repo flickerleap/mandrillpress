@@ -183,6 +183,7 @@ class Mandrillpress {
 	}
 
 	public function update_network_option( $old_value, $value, $option ) {
+		exit;
 		update_network_option( 1, $option, $value );
 	}
 
