@@ -83,7 +83,7 @@ class Mandrillpress {
 		}
 		$this->plugin_name = 'mandrillpress';
 
-		$this->settings = get_site_option( 'mandrillpress', array() );
+		$this->settings = get_network_option( 1, 'mandrillpress', array() );
 
 		$this->load_dependencies();
 		$this->set_locale();
