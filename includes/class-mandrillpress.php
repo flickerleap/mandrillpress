@@ -183,8 +183,9 @@ class Mandrillpress {
 	}
 
 	public function update_network_option( $option, $old_value, $value ) {
-		exit;
-		update_network_option( 1, $option, $value );
+		if ( 'mandrillpress' == $option ) {
+			update_network_option( 1, $option, $value );
+		}
 	}
 
 	/**
