@@ -234,7 +234,7 @@ class Mandrillpress {
 		}
 
 		if ( isset( $this->settings['return_path'] ) && ! empty( $this->settings['return_path'] ) ) {
-			$phpmailer->AddCustomHeader( sprintf( '%1$s: %2$s', 'X-MC-ReturnPathDomain', $this->settings['a'] ) );
+			$phpmailer->AddCustomHeader( sprintf( '%1$s: %2$s', 'X-MC-ReturnPathDomain', $this->settings['return_path'] ) );
 		}
 
 	}
