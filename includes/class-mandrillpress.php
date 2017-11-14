@@ -219,7 +219,15 @@ class Mandrillpress {
 
 		$phpmailer->isSMTP();
 		$phpmailer->set( 'SMTPAuth', true );
-		$phpmailer->set( 'SMTPSecure', 'ssl' );
+		$phpmailer->set( 'SMTPSecure', 'tls' );
+		
+		$phpmailer->SMTPOptions = array(
+		    'ssl' => array(
+			'verify_peer' => false,
+			'verify_peer_name' => false,
+			'allow_self_signed' => true
+		    )
+		);
 
 		$phpmailer->set( 'Host', 'smtp.mandrillapp.com' );
 		$phpmailer->set( 'Port', '587' );
