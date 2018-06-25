@@ -1,6 +1,6 @@
 {
     "name": "flickerleap/mandrillpress",
-    "description": "Total theme for WordPress",
+    "description": "Mandrill sending via WordPress",
     "type": "wordpress-plugin",
     "license": "GPL",
     "minimum-stability": "stable",
