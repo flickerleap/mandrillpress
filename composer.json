@@ -1,0 +1,9 @@
+{
+    "name": "flickerleap/total",
+    "description": "Total theme for WordPress",
+    "type": "wordpress-theme",
+    "license": "GPL",
+    "minimum-stability": "stable",
+    "require": {
+    }
+}
