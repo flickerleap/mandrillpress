@@ -232,7 +232,20 @@ class Mandrillpress {
 		$phpmailer->set( 'Host', 'smtp.mandrillapp.com' );
 		$phpmailer->set( 'Port', '587' );
 
-		$phpmailer->setFrom( $this->settings['from_email'], $this->settings['from_name'] );
+		$from_email_address = $this->settings['from_email'];
+		$requested_from_email_address = $phpmailer->From;
+
+		$from_email_address_domain = explode('@', $from_email_address)[1];
+		$requested_from_email_address_domain = explode('@', $requested_from_email_address)[1];
+		if( 
+			$from_email_address_domain === $requested_from_email_address_domain
+		) {
+			$email = $requested_from_email_address;
+		}else{
+			$email = $from_email_address;
+		}
+
+		$phpmailer->setFrom($email, $this->settings['from_name'] );
 
 		$phpmailer->set( 'Username', $this->settings['username'] );
 		$phpmailer->set( 'Password', $this->settings['api_key'] );
