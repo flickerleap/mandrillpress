@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       https://flickerleap.com
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Mandrillpress
  * @subpackage Mandrillpress/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      1.0.1
  * @package    Mandrillpress
  * @subpackage Mandrillpress/includes
  * @author     Flicker Leap <admin@flickerleap.com>
@@ -27,7 +27,7 @@ class Mandrillpress_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public static function activate() {
 

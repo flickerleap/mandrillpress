@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       https://flickerleap.com
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Mandrillpress
  * @subpackage Mandrillpress/admin
@@ -25,7 +25,7 @@ class Mandrillpress_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Mandrillpress_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Mandrillpress_Admin {
 	/**
 	 * The settings for the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   private
 	 * @var      string    $settings    Holds the options.
 	 */
@@ -52,7 +52,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -68,7 +68,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function enqueue_styles() {
 
@@ -91,7 +91,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function enqueue_scripts() {
 
@@ -114,7 +114,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Register options page.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function options_page() {
 
@@ -131,7 +131,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Output options page.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function options_page_html() {
 
@@ -146,7 +146,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Register settings.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 */
 	public function register_settings() {
 
