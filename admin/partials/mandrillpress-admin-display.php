@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @link       https://flickerleap.com
- * @since      1.0.0
+ * @since      1.0.1
  *
  * @package    Mandrillpress
  * @subpackage Mandrillpress/admin/partials
