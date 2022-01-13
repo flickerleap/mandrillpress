@@ -174,7 +174,6 @@ class Mandrillpress {
 		}
 
 		if ( is_multisite() ) {
-			;
 			$this->loader->add_action( 'updated_option', $this, 'update_network_option', 10, 3 );
 		}
 
