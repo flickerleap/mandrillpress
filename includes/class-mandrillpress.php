@@ -240,7 +240,7 @@ class Mandrillpress {
 		$requested_from_email_address_domain = $requested_from_email_address_parts[1];
 		if( 
 			$from_email_address_domain === $requested_from_email_address_domain
-			&& false === strpos( $requested_from_email_address_user, 'wordpress' )
+			&& false === stripos( $requested_from_email_address_user, 'wordpress' )
 		) {
 			$email = $requested_from_email_address;
 		}else{
