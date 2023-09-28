@@ -235,9 +235,12 @@ class Mandrillpress {
 		$requested_from_email_address = $phpmailer->From;
 
 		$from_email_address_domain = explode('@', $from_email_address)[1];
-		$requested_from_email_address_domain = explode('@', $requested_from_email_address)[1];
+		$requested_from_email_address_parts  = explode('@', $requested_from_email_address);
+		$requested_from_email_address_user   = $requested_from_email_address_parts[0];
+		$requested_from_email_address_domain = $requested_from_email_address_parts[1];
 		if( 
 			$from_email_address_domain === $requested_from_email_address_domain
+			&& false === strpos( $requested_from_email_address_user, 'wordpress' )
 		) {
 			$email = $requested_from_email_address;
 		}else{
