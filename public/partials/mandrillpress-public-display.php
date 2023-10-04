@@ -6,7 +6,7 @@
  * This file is used to markup the public-facing aspects of the plugin.
  *
  * @link       https://flickerleap.com
- * @since      1.0.1
+ * @since      1.0.2
  *
  * @package    Mandrillpress
  * @subpackage Mandrillpress/public/partials
