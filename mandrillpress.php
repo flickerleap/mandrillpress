@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://flickerleap.com
- * @since             1.0.1
+ * @since             1.0.2
  * @package           Mandrillpress
  *
  * @wordpress-plugin
  * Plugin Name:       MandrillPress
  * Plugin URI:        https://github.com/flickerleap/mandrillpress
  * Description:       A WordPress plugin that sends all WordPress emails via Mandrill.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Flicker Leap
  * Author URI:        https://flickerleap.com
  * License:           GPL-2.0+
@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'PLUGIN_VERSION', '1.0.1' );
+define( 'PLUGIN_VERSION', '1.0.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -66,7 +66,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-mandrillpress.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.1
+ * @since    1.0.2
  */
 function run_mandrillpress() {
 
