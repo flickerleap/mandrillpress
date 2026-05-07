@@ -129,21 +129,6 @@ class Mandrillpress_Admin {
 	}
 
 	/**
-	 * Output options page.
-	 *
-	 * @since    1.0.2
-	 */
-	public function options_page_html() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/mandrillpress-admin-display.php';
-
-	}
-
-	/**
 	 * Register settings.
 	 *
 	 * @since    1.0.2
@@ -207,6 +192,21 @@ class Mandrillpress_Admin {
 			'email_settings'
 		);
 
+		add_settings_section(
+			'debug_settings',
+			'Debug Settings',
+			array( $this, 'debug_settings_cb' ),
+			'mandrillpress'
+		);
+
+		add_settings_field(
+			'debug_log',
+			'Enable Debug Logging',
+			array( $this, 'debug_log_cb' ),
+			'mandrillpress',
+			'debug_settings'
+		);
+
 	}
 
 	public function emails_settings_cb() {
@@ -247,6 +247,34 @@ class Mandrillpress_Admin {
 		?>
 		<input type="text" name="mandrillpress[return_path]" value="<?php echo isset( $this->settings['return_path'] ) ? esc_attr( $this->settings['return_path'] ) : ''; ?>">
 		<?php
+	}
+
+	public function debug_settings_cb() {
+		echo '<p>When enabled, email activity is logged to <a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs' ) ) . '">WooCommerce &rsaquo; Status &rsaquo; Logs</a> under the <strong>mandrillpress</strong> source.</p>';
+	}
+
+	public function debug_log_cb() {
+		$checked = ! empty( $this->settings['debug_log'] ) ? 'checked' : '';
+		$wc_active = function_exists( 'wc_get_logger' );
+		?>
+		<label>
+			<input type="checkbox" name="mandrillpress[debug_log]" value="1" <?php echo $checked; ?> <?php disabled( ! $wc_active ); ?>>
+			Log email activity to WooCommerce logs
+		</label>
+		<?php if ( ! $wc_active ) : ?>
+			<p class="description" style="color:#d63638;">WooCommerce must be active to enable debug logging.</p>
+		<?php endif; ?>
+		<?php
+	}
+
+	public function options_page_html() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/mandrillpress-admin-display.php';
+
 	}
 
 }
