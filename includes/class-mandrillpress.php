@@ -178,6 +178,7 @@ class Mandrillpress {
 		}
 
 		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
+		$this->loader->add_action( 'wp_mail_failed', $this, 'log_mail_failure' );
 
 	}
 
@@ -202,6 +203,7 @@ class Mandrillpress {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'phpmailer_init', $this, 'use_mandrill' );
+		$this->loader->add_action( 'wp_mail_failed', $this, 'log_mail_failure' );
 
 	}
 
@@ -213,13 +215,19 @@ class Mandrillpress {
 			|| empty( $this->settings['username'] )
 			|| empty( $this->settings['api_key'] )
 		) {
+			$this->log( 'Mandrill not configured — missing required settings, falling back to default mailer', array(
+				'has_from_email' => ! empty( $this->settings['from_email'] ),
+				'has_from_name'  => ! empty( $this->settings['from_name'] ),
+				'has_username'   => ! empty( $this->settings['username'] ),
+				'has_api_key'    => ! empty( $this->settings['api_key'] ),
+			) );
 			return;
 		}
 
 		$phpmailer->isSMTP();
 		$phpmailer->set( 'SMTPAuth', true );
 		$phpmailer->set( 'SMTPSecure', 'tls' );
-		
+
 		$phpmailer->SMTPOptions = array(
 		    'ssl' => array(
 			'verify_peer' => false,
@@ -238,7 +246,7 @@ class Mandrillpress {
 		$requested_from_email_address_parts  = explode('@', $requested_from_email_address);
 		$requested_from_email_address_user   = $requested_from_email_address_parts[0];
 		$requested_from_email_address_domain = $requested_from_email_address_parts[1];
-		if( 
+		if(
 			$from_email_address_domain === $requested_from_email_address_domain
 			&& false === stripos( $requested_from_email_address_user, 'wordpress' )
 		) {
@@ -260,6 +268,25 @@ class Mandrillpress {
 			$phpmailer->AddCustomHeader( sprintf( '%1$s: %2$s', 'X-MC-ReturnPathDomain', $this->settings['return_path'] ) );
 		}
 
+	}
+
+	public function log_mail_failure( $wp_error ) {
+		$this->log( 'FAILED — wp_mail_failed fired', array(
+			'error' => $wp_error->get_error_message(),
+			'data'  => $wp_error->get_error_data(),
+		), 'error' );
+	}
+
+	private function log( $message, $context = array(), $level = 'info' ) {
+		if ( empty( $this->settings['debug_log'] ) || ! function_exists( 'wc_get_logger' ) ) {
+			return;
+		}
+
+		if ( ! empty( $context ) ) {
+			$message .= ' | ' . wp_json_encode( $context );
+		}
+
+		wc_get_logger()->log( $level, $message, array( 'source' => 'mandrillpress' ) );
 	}
 
 	/**
