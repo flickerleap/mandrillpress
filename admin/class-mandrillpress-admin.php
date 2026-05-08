@@ -294,7 +294,7 @@ class Mandrillpress_Admin {
 	/**
 	 * Renders the description for the Debug Settings section.
 	 *
-	 * @since  1.0.2
+	 * @since  1.0.3
 	 * @return void
 	 */
 	public function debug_settings_cb() {
@@ -307,7 +307,7 @@ class Mandrillpress_Admin {
 	 * Shows a notice when WooCommerce is not active, since the logger
 	 * requires it.
 	 *
-	 * @since  1.0.2
+	 * @since  1.0.3
 	 * @return void
 	 */
 	public function debug_log_cb() {

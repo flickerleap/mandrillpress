@@ -79,7 +79,7 @@ class Mandrillpress {
 		if ( defined( 'PLUGIN_VERSION' ) ) {
 			$this->version = PLUGIN_VERSION;
 		} else {
-			$this->version = '1.0.2';
+			$this->version = '1.0.3';
 		}
 		$this->plugin_name = 'mandrillpress';
 
@@ -293,7 +293,7 @@ class Mandrillpress {
 	/**
 	 * Logs a mail failure triggered by the `wp_mail_failed` action.
 	 *
-	 * @since  1.0.2
+	 * @since  1.0.3
 	 * @param  \WP_Error $wp_error The error object populated by wp_mail().
 	 * @return void
 	 */
@@ -309,7 +309,7 @@ class Mandrillpress {
 	 *
 	 * No-ops when debug logging is disabled or WooCommerce is not active.
 	 *
-	 * @since  1.0.2
+	 * @since  1.0.3
 	 * @access private
 	 * @param  string $message The log message.
 	 * @param  array  $context Optional key/value pairs appended as JSON.
