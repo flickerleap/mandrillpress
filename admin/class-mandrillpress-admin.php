@@ -129,21 +129,6 @@ class Mandrillpress_Admin {
 	}
 
 	/**
-	 * Output options page.
-	 *
-	 * @since    1.0.2
-	 */
-	public function options_page_html() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/mandrillpress-admin-display.php';
-
-	}
-
-	/**
 	 * Register settings.
 	 *
 	 * @since    1.0.2
@@ -207,46 +192,154 @@ class Mandrillpress_Admin {
 			'email_settings'
 		);
 
+		add_settings_section(
+			'debug_settings',
+			'Debug Settings',
+			array( $this, 'debug_settings_cb' ),
+			'mandrillpress'
+		);
+
+		add_settings_field(
+			'debug_log',
+			'Enable Debug Logging',
+			array( $this, 'debug_log_cb' ),
+			'mandrillpress',
+			'debug_settings'
+		);
+
 	}
 
+	/**
+	 * Renders the description for the Email Settings section.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function emails_settings_cb() {
 		echo '<p>It is very important that you set the following information correctly as it will break email sending.</p>';
 	}
 
+	/**
+	 * Renders the From Email address field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function from_email_cb() {
 		?>
 		<input type="text" name="mandrillpress[from_email]" value="<?php echo isset( $this->settings['from_email'] ) ? esc_attr( $this->settings['from_email'] ) : ''; ?>">
 		<?php
 	}
 
+	/**
+	 * Renders the From Name field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function from_name_cb() {
 		?>
 		<input type="text" name="mandrillpress[from_name]" value="<?php echo isset( $this->settings['from_name'] ) ? esc_attr( $this->settings['from_name'] ) : ''; ?>">
 		<?php
 	}
 
+	/**
+	 * Renders the Mandrill username field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function username_cb() {
 		?>
 		<input type="text" name="mandrillpress[username]" value="<?php echo isset( $this->settings['username'] ) ? esc_attr( $this->settings['username'] ) : ''; ?>">
 		<?php
 	}
 
+	/**
+	 * Renders the Mandrill API key field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function api_key_cb() {
 		?>
 		<input type="text" name="mandrillpress[api_key]" value="<?php echo isset( $this->settings['api_key'] ) ? esc_attr( $this->settings['api_key'] ) : ''; ?>">
 		<?php
 	}
 
+	/**
+	 * Renders the Mandrill subaccount field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function subaccount_cb() {
 		?>
 		<input type="text" name="mandrillpress[subaccount]" value="<?php echo isset( $this->settings['subaccount'] ) ? esc_attr( $this->settings['subaccount'] ) : ''; ?>">
 		<?php
 	}
 
+	/**
+	 * Renders the return-path domain field.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
 	public function return_path_cb() {
 		?>
 		<input type="text" name="mandrillpress[return_path]" value="<?php echo isset( $this->settings['return_path'] ) ? esc_attr( $this->settings['return_path'] ) : ''; ?>">
 		<?php
+	}
+
+	/**
+	 * Renders the description for the Debug Settings section.
+	 *
+	 * @since  1.0.3
+	 * @return void
+	 */
+	public function debug_settings_cb() {
+		echo '<p>When enabled, email activity is logged to <a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs' ) ) . '">WooCommerce &rsaquo; Status &rsaquo; Logs</a> under the <strong>mandrillpress</strong> source.</p>';
+	}
+
+	/**
+	 * Renders the debug logging checkbox field.
+	 *
+	 * Shows a notice when WooCommerce is not active, since the logger
+	 * requires it.
+	 *
+	 * @since  1.0.3
+	 * @return void
+	 */
+	public function debug_log_cb() {
+		$checked = ! empty( $this->settings['debug_log'] ) ? 'checked' : '';
+		$wc_active = function_exists( 'wc_get_logger' );
+		?>
+		<label>
+			<input type="checkbox" name="mandrillpress[debug_log]" value="1" <?php echo $checked; ?> <?php disabled( ! $wc_active ); ?>>
+			Log email activity to WooCommerce logs
+		</label>
+		<?php if ( ! $wc_active ) : ?>
+			<p class="description" style="color:#d63638;">WooCommerce must be active to enable debug logging.</p>
+		<?php endif; ?>
+		<?php
+	}
+
+	/**
+	 * Renders the plugin settings page.
+	 *
+	 * Capability-gated to `manage_options`.
+	 *
+	 * @since  1.0.2
+	 * @return void
+	 */
+	public function options_page_html() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/mandrillpress-admin-display.php';
+
 	}
 
 }
